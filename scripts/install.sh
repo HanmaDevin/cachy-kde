@@ -119,9 +119,6 @@ copy_config() {
 
   sudo cp -r "$from/Cursor/Bibata-Modern-Ice" "/usr/share/icons"
   sudo cp -r "$from/fonts/" "/usr/share"
-  sudo cp "$from/etc/pacman.conf" "/etc/pacman.conf"
-  sudo cp "$cfgPath/waybar/weather" "/usr/bin/"
-  sudo cp "$from/scripts/pullall" "/usr/bin/"
 
   sudo cp -r "$from/icons/" "/usr/share/"
  
