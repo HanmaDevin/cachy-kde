@@ -51,7 +51,7 @@ install_kde_stuff() {
   echo ":: Do you want to apply the a desktop theme?"
   ans=$(gum choose "Yes" "No")
   if [[ "$ans" == "Yes" ]]; then
-    python -m pip install konsave
+    yay -S --noconfirm konsave
     local choice=$(gum choose "nordic" "layan")
     if [[ "$choice" == "layan" ]]; then
       gunzip "$repo/layan.knsv.gz"
@@ -175,6 +175,7 @@ installAurPackages
 gum spin --spinner dot --title "Starting setup now..." -- sleep 2
 copy_config
 detect_nvidia
+install_kde_stuff
 installDeepCoolDriver
 configure_git
 
