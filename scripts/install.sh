@@ -7,11 +7,11 @@
 #                                                  /_/           
 clear
 
-download_folder="$HOME/"
-cfgPath="$download_folder/.config"
+from="$HOME/cachy-kde"
+cfgPath="$from/.config"
 
 installPackages() {
-    local packages=("cava" "gum" "network-manager-applet" "gunzip" "networkmanager-openvpn" "zip" "man" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "brightnessctl" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "grim" "slurp" "swappy" "inetutils" "net-tools" "wl-clipboard" "jq" "nodejs" "npm" "nm-connection-editor" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
+    local packages=("cava" "gum" "network-manager-applet" "networkmanager-openvpn" "zip" "man" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "brightnessctl" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "grim" "slurp" "swappy" "inetutils" "net-tools" "wl-clipboard" "jq" "nodejs" "npm" "nm-connection-editor" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
     for pkg in "${packages[@]}"; do
         sudo pacman -S --noconfirm "$pkg"
     done
@@ -35,8 +35,8 @@ installDeepCoolDriver() {
   echo "Do you want to install DeepCool CPU-Fan driver?"
   deepcool=$(gum choose "Yes" "No")
   if [[ "$deepcool" == "Yes" ]]; then
-    sudo cp "$download_folder/DeepCool/deepcool-digital-linux" "/usr/sbin"
-    sudo cp "$download_folder/DeepCool/deepcool-digital.service" "/etc/systemd/system/"
+    sudo cp "$from/DeepCool/deepcool-digital-linux" "/usr/sbin"
+    sudo cp "$from/DeepCool/deepcool-digital.service" "/etc/systemd/system/"
     sudo systemctl enable deepcool-digital
   fi
 }
@@ -113,24 +113,24 @@ copy_config() {
     mkdir -p "$HOME/Pictures/Screenshots/"
   fi
 
-  cp "$download_folder/.zshrc" "$HOME/"
+  cp "$from/.zshrc" "$HOME/"
   cp -r "$cfgPath" "$HOME/"
-  cp -r "$download_folder/Wallpaper/" "$HOME/Pictures/"
+  cp -r "$from/Wallpaper/" "$HOME/Pictures/"
 
-  sudo cp -r "$download_folder/Cursor/Bibata-Modern-Ice" "/usr/share/icons"
-  sudo cp -r "$download_folder/fonts/" "/usr/share"
-  sudo cp "$download_folder/etc/pacman.conf" "/etc/pacman.conf"
+  sudo cp -r "$from/Cursor/Bibata-Modern-Ice" "/usr/share/icons"
+  sudo cp -r "$from/fonts/" "/usr/share"
+  sudo cp "$from/etc/pacman.conf" "/etc/pacman.conf"
   sudo cp "$cfgPath/waybar/weather" "/usr/bin/"
-  sudo cp "$download_folder/scripts/pullall" "/usr/bin/"
+  sudo cp "$from/scripts/pullall" "/usr/bin/"
 
-  sudo cp -r "$download_folder/icons/" "/usr/share/"
+  sudo cp -r "$from/icons/" "/usr/share/"
  
   echo "Want to install Vencord?"
   vencord=$(gum choose "Yes" "No")
 
   if [[ "$vencord" == "Yes" ]]; then 
-    bash "$download_folder/Vencord/VencordInstaller.sh"
-    cp -r "$download_folder/Vencord/themes/" "$HOME/.config/Vencord/"
+    bash "$from/Vencord/VencordInstaller.sh"
+    cp -r "$from/Vencord/themes/" "$HOME/.config/Vencord/"
   fi
 }
 
