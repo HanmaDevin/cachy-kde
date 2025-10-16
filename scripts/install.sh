@@ -7,11 +7,11 @@
 #                                                  /_/           
 clear
 
-download_folder="$HOME/hyprdev/"
-cfgPath="$download_folder/.config/"
+download_folder="$HOME/"
+cfgPath="$download_folder/.config"
 
 installPackages() {
-    local packages=("cava" "gum" "network-manager-applet" "networkmanager-openvpn" "zip" "man" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "brightnessctl" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "grim" "slurp" "swappy" "inetutils" "net-tools" "wl-clipboard" "jq" "nodejs" "npm" "nm-connection-editor" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
+    local packages=("cava" "gum" "network-manager-applet" "gunzip" "networkmanager-openvpn" "zip" "man" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "brightnessctl" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "grim" "slurp" "swappy" "inetutils" "net-tools" "wl-clipboard" "jq" "nodejs" "npm" "nm-connection-editor" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
     for pkg in "${packages[@]}"; do
         sudo pacman -S --noconfirm "$pkg"
     done
@@ -37,8 +37,32 @@ installDeepCoolDriver() {
   if [[ "$deepcool" == "Yes" ]]; then
     sudo cp "$download_folder/DeepCool/deepcool-digital-linux" "/usr/sbin"
     sudo cp "$download_folder/DeepCool/deepcool-digital.service" "/etc/systemd/system/"
+    sudo systemctl enable deepcool-digital
   fi
-  sudo systemctl enable deepcool-digital
+}
+
+install_kde_stuff() {
+  echo ":: It seems you are running KDE Plasma."
+  echo ":: Do you want to install the konsole (terminal) profile & themes?"
+  local ans=$(gum choose "Yes" "No")
+  if [[ "$ans" == "Yes" ]]; then
+    cp -r "$repo/konsole/" "$HOME/.local/share/"
+  fi
+  echo ":: Do you want to apply the a desktop theme?"
+  ans=$(gum choose "Yes" "No")
+  if [[ "$ans" == "Yes" ]]; then
+    python -m pip install konsave
+    local choice=$(gum choose "nordic" "layan")
+    if [[ "$choice" == "layan" ]]; then
+      gunzip "$repo/layan.knsv.gz"
+      konsave -i layan.knsv
+      konsave -a layan
+    else
+      gunzip "$repo/nordic.knsv.gz"
+      konsave -i nordic.knsv
+      konsave -a nordic
+    fi
+  fi
 }
 
 configure_git() {
