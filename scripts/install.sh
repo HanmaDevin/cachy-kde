@@ -18,7 +18,7 @@ installPackages() {
 }
 
 installAurPackages() {
-    local packages=("google-chrome" "xwaylandvideobridge" "openvpn-update-systemd-resolved" "lazydocker" "qt-heif-image-plugin" "luajit-tiktoken-bin" "ani-cli")
+    local packages=("google-chrome" "openvpn-update-systemd-resolved" "lazydocker" "qt-heif-image-plugin" "luajit-tiktoken-bin" "ani-cli")
     for pkg in "${packages[@]}"; do
         yay -S --noconfirm "$pkg"
     done
