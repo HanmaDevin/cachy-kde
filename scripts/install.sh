@@ -11,14 +11,14 @@ from="$HOME/cachy-kde"
 cfgPath="$from/.config"
 
 installPackages() {
-    local packages=("cava" "gum" "network-manager-applet" "networkmanager-openvpn" "zip" "man" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "brightnessctl" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "grim" "slurp" "swappy" "inetutils" "net-tools" "wl-clipboard" "jq" "nodejs" "npm" "nm-connection-editor" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
+    local packages=("gum" "libreoffice" "rust-src" "mpv-mpris" "fastfetch" "glow" "ntfs-3g" "tree" "discord" "lazygit" "ufw" "zsh" "unzip" "wget" "yazi" "neovim" "eza" "btop" "gamemode" "steam" "mangohud" "zoxide" "fzf" "bat" "jdk-openjdk" "docker" "ripgrep" "cargo" "fd" "starship" "wine" "python-pip" "python-requests" "python-pipx" "openssh" "pam-u2f" "ttf-font-awesome" "ttf-nerd-fonts-symbols" "ttf-jetbrains-mono-nerd" "noto-fonts-emoji" "libfido2" "qt5-wayland" "qt6-wayland" "xdg-desktop-portal-gtk" "xdg-desktop-portal-wlr" "gdb" "pacman-contrib" "libimobiledevice" "usbmuxd" "gvfs-gphoto2" "ifuse" "python-dotenv" "openvpn" "ncdu" "texlive" "lynx" "inetutils" "net-tools" "jq" "nodejs" "npm" "github-cli" "protonmail-bridge" "proton-vpn-gtk-app" "wireguard-tools")
     for pkg in "${packages[@]}"; do
         sudo pacman -S --noconfirm "$pkg"
     done
 }
 
 installAurPackages() {
-    local packages=("google-chrome" "openvpn-update-systemd-resolved" "lazydocker" "qt-heif-image-plugin" "luajit-tiktoken-bin" "ani-cli")
+    local packages=("google-chrome" "openvpn-update-systemd-resolved" "lazydocker" "qt-heif-image-plugin" "luajit-tiktoken-bin" "ani-cli" "konsave")
     for pkg in "${packages[@]}"; do
         yay -S --noconfirm "$pkg"
     done
@@ -51,17 +51,9 @@ install_kde_stuff() {
   echo ":: Do you want to apply the a desktop theme?"
   ans=$(gum choose "Yes" "No")
   if [[ "$ans" == "Yes" ]]; then
-    yay -S --noconfirm konsave
-    local choice=$(gum choose "nordic" "layan")
-    if [[ "$choice" == "layan" ]]; then
-      gunzip "$repo/layan.knsv.gz"
-      konsave -i layan.knsv
-      konsave -a layan
-    else
-      gunzip "$repo/nordic.knsv.gz"
-      konsave -i nordic.knsv
-      konsave -a nordic
-    fi
+    gunzip "$from/cachy.knsv.gz"
+    konsave -i "$from/cachy.knsv"
+    konsave -a cachy
   fi
 }
 
@@ -119,7 +111,6 @@ copy_config() {
 
   sudo cp -r "$from/Cursor/Bibata-Modern-Ice" "/usr/share/icons"
   sudo cp -r "$from/fonts/" "/usr/share"
-
   sudo cp -r "$from/icons/" "/usr/share/"
  
   echo "Want to install Vencord?"
